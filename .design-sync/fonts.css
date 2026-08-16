@@ -1,0 +1,25 @@
+/* Brand fonts for the design-sync bundle (cfg.extraFonts).
+ *
+ * The site loads these through `next/font` (geist/font/sans, geist/font/mono)
+ * in src/app/layout.tsx, which self-hosts them at build time and exposes
+ * --font-geist-sans / --font-geist-mono. The bundle has no next/font, so the
+ * same two variable faces are declared here and copied into fonts/ by the
+ * converter. Variable files cover the full 100-900 range the type scale uses
+ * (.label at 500, headings at 500, body at 400) in two requests.
+ */
+
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2") format("woff2");
+}

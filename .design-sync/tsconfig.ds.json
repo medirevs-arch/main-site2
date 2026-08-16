@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "design-sync build tsconfig. Only compilerOptions.paths is read (by the",
+    "converter's esbuild resolve plugin, lib/bundle.mjs tsconfigPathsPlugin) —",
+    "it maps the repo's `@/` alias plus the modules that have no meaning",
+    "outside a Next.js server onto the shims in ./shims/.",
+    "esbuild picks up jsx/target from the repo's own tsconfig.json, which is",
+    "why this file deliberately does not restate them.",
+    "ORDER MATTERS: the resolver returns on first match, so the specific",
+    "@/lib/blog entry must stay above the @/* wildcard or it never fires."
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/lib/blog": ["./shims/blog.ts"],
+      "@/*": ["../src/*"],
+      "next/link": ["./shims/next-link.tsx"],
+      "next/image": ["./shims/next-image.tsx"],
+      "next/navigation": ["./shims/next-navigation.ts"]
+    }
+  }
+}

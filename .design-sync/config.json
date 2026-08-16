@@ -1,0 +1,144 @@
+{
+  "shape": "package",
+  "pkg": "medirevs-v2",
+  "globalName": "Medirevs",
+  "srcDir": "src/components",
+  "tsconfig": ".design-sync/tsconfig.ds.json",
+  "buildCmd": "node .design-sync/prebuild.mjs",
+  "cssEntry": ".design-sync/.cache/medirevs.css",
+  "readmeHeader": ".design-sync/conventions.md",
+  "extraFonts": [
+    ".design-sync/fonts.css"
+  ],
+  "provider": {
+    "component": "DesignPreviewRoot"
+  },
+  "overrides": {
+    "Footer": {
+      "viewport": "1440x1200"
+    },
+    "ProductEcosystem": {
+      "viewport": "1440x1000"
+    },
+    "Navigation": {
+      "viewport": "1440x560",
+      "cardMode": "single",
+      "primaryStory": "OverDarkHero"
+    },
+    "CareJourney": {
+      "viewport": "1200x600",
+      "cardMode": "column"
+    },
+    "Hero": {
+      "viewport": "1440x900"
+    },
+    "LabsReveal": {
+      "viewport": "1440x1150"
+    },
+    "ScrollVideo": {
+      "viewport": "1200x900",
+      "cardMode": "column"
+    },
+    "VideoBackground": {
+      "viewport": "1200x800",
+      "cardMode": "column"
+    },
+    "Scene3D": {
+      "viewport": "1100x800",
+      "cardMode": "column"
+    },
+    "FootageBand": {
+      "viewport": "1440x800",
+      "cardMode": "column"
+    },
+    "ArticleRow": {
+      "cardMode": "column"
+    },
+    "EditorialStatement": {
+      "cardMode": "column"
+    },
+    "MedirevsMark": {
+      "cardMode": "column"
+    },
+    "NewsletterForm": {
+      "cardMode": "column"
+    },
+    "PageHero": {
+      "cardMode": "column"
+    },
+    "Aperture": {
+      "cardMode": "column"
+    },
+    "ProductGlyph": {
+      "cardMode": "column"
+    },
+    "ArticleCard": {
+      "cardMode": "column"
+    },
+    "Form": {
+      "cardMode": "column"
+    },
+    "SectionHeader": {
+      "cardMode": "column"
+    },
+    "ProjectTimeline": {
+      "cardMode": "column"
+    },
+    "Gallery": {
+      "cardMode": "column"
+    },
+    "FieldRing": {
+      "cardMode": "column"
+    },
+    "LensFigure": {
+      "cardMode": "column"
+    },
+    "NetworkFigure": {
+      "cardMode": "column"
+    },
+    "AnimatedNetwork": {
+      "cardMode": "column"
+    },
+    "OpticalStack": {
+      "cardMode": "column"
+    },
+    "OpticalStackFigure": {
+      "cardMode": "column"
+    }
+  },
+  "componentSrcMap": {
+    "Button": "src/components/ui.tsx",
+    "Arrow": "src/components/ui.tsx",
+    "TextLink": "src/components/ui.tsx",
+    "SectionHeader": "src/components/ui.tsx",
+    "StatusChip": "src/components/ui.tsx",
+    "EditorialStatement": "src/components/ui.tsx",
+    "ArticleCard": "src/components/ArticleCard.tsx",
+    "ArticleRow": "src/components/ArticleCard.tsx",
+    "Gallery": "src/components/Gallery.tsx",
+    "PageHero": "src/components/PageHero.tsx",
+    "MedirevsMark": "src/components/MedirevsMark.tsx",
+    "ProductEcosystem": "src/components/ProductEcosystem.tsx",
+    "Navigation": "src/components/Navigation.tsx",
+    "Footer": "src/components/Footer.tsx",
+    "Form": "src/components/Form.tsx",
+    "NewsletterForm": "src/components/NewsletterForm.tsx",
+    "Reveal": "src/components/Reveal.tsx",
+    "ScrollVideo": "src/components/ScrollVideo.tsx",
+    "VideoBackground": "src/components/VideoBackground.tsx",
+    "Aperture": "src/components/graphics/Aperture.tsx",
+    "FieldRing": "src/components/graphics/Aperture.tsx",
+    "AnimatedNetwork": "src/components/graphics/AnimatedNetwork.tsx",
+    "CareJourney": "src/components/graphics/CareJourney.tsx",
+    "LensFigure": "src/components/graphics/LensFigure.tsx",
+    "NetworkFigure": "src/components/graphics/NetworkFigure.tsx",
+    "OpticalStack": "src/components/graphics/OpticalStack.tsx",
+    "OpticalStackFigure": "src/components/graphics/OpticalStackFigure.tsx",
+    "ProductGlyph": "src/components/graphics/ProductGlyph.tsx",
+    "ProjectTimeline": "src/components/graphics/ProjectTimeline.tsx",
+    "Hero": "src/components/sections/Hero.tsx",
+    "LabsReveal": "src/components/sections/LabsReveal.tsx",
+    "FootageBand": "src/components/sections/FootageBand.tsx",
+    "Scene3D": "src/components/three/Scene3D.tsx"
+  }
+}

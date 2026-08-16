@@ -1,0 +1,562 @@
+@import "tailwindcss";
+
+/* ============================================================
+   MEDIREVS DESIGN SYSTEM
+   Brand colours are sampled from the Medirevs logo and the
+   existing theme. Neutrals are green-tinted, not blue-grey.
+   ============================================================ */
+
+@theme {
+  /* Brand — primary */
+  --color-brand: #289d90;
+  --color-brand-dark: #1f7a70;
+  --color-brand-deep: #14554f;
+  --color-brand-bright: #14b8a6;
+
+  /* Brand — from the logo mark. Signal green is reserved for
+     live/active states. Optic blue is the data + diagnostics accent. */
+  --color-signal: #27c030;
+  --color-optic: #55b0df;
+
+  /* Neutrals — green-tinted */
+  --color-ink: #0b0f0e;
+  --color-graphite: #141a19;
+  --color-charcoal: #2a3331;
+  --color-slate: #6e7a77;
+  --color-mist: #b8c2bf;
+  --color-line: #e2e7e5;
+  --color-paper: #f4f6f5;
+  --color-bone: #fafbfa;
+
+  /* Dark surfaces. Navy carries over from the previous build so the site is
+     not only white and near-black. */
+  --color-lab: #07100f;
+  --color-lab-raised: #0e1a18;
+  --color-navy: #1a2332;
+  --color-navy-deep: #0f1722;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+/* Version-swappable surfaces. `@theme inline` keeps these pointing at the
+   custom properties below, so `bg-page` follows the active build. */
+@theme inline {
+  --color-page: var(--page);
+  --color-page-alt: var(--page-alt);
+  --color-surface: var(--surface);
+  --color-pill: var(--pill);
+  /* Tinted bands, so the page alternates paper, teal wash and full teal
+     rather than running white all the way down. */
+  --color-wash: var(--wash);
+  --color-wash-deep: var(--wash-deep);
+}
+
+:root {
+  /* 1680 was too wide to hold a reading measure — long lines are one of the
+     things that made the page feel loose. */
+  --shell: 1440px;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --measure: 68ch;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --page: #ffffff;
+  --page-alt: #fafbfa;
+  --surface: #f4f6f5;
+  --pill: #f0f1f0;
+  --wash: #eaf3f1;
+  --wash-deep: #dcebe8;
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Everything below sits in the components layer so that Tailwind utilities
+   still win — otherwise `.lede`'s colour would beat `text-white/80`. */
+@layer components {
+
+/* ---------- Layout primitives ---------- */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+/* ---------- Typography ---------- */
+
+/* ---------- Type scale ----------
+   Six sizes, and nothing between them. The page previously rendered 26
+   distinct size/line-height/weight combinations, six of them under 14px,
+   which is what made it read as unconsidered. Anything that needs a size not
+   in this scale is a signal the composition is wrong, not that the scale is
+   missing a step. */
+
+.display {
+  font-size: clamp(2.75rem, 7.5vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.032em;
+  font-weight: 500;
+}
+
+.h1 {
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  font-weight: 500;
+}
+
+.h2 {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+}
+
+.h3 {
+  font-size: clamp(1.1875rem, 1.5vw, 1.4375rem);
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+  font-weight: 500;
+}
+
+.lede {
+  font-size: clamp(1.0625rem, 1.25vw, 1.25rem);
+  line-height: 1.6;
+  letter-spacing: -0.008em;
+  color: var(--color-charcoal);
+}
+
+/* Mono label — section indices, statuses, engineering annotations.
+   Was 11px at line-height 1, used 87 times on the homepage alone: the single
+   biggest reason "the fonts are too small". At 13px the tracking can come
+   down too, because letterspacing is a crutch for type that is too small. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ---------- Rhythm ---------- */
+
+/* ---------- Rhythm ----------
+   Air is only luxurious when there is something to be spacious around. The
+   old values (up to 152px on .band and 200px on .band-tall) wrapped sections
+   holding 20-30 words, so the homepage ran 9,565px for 653 words — roughly
+   15px of page for every word. These are tightened by about a third; the
+   remaining fix is content density, not padding. */
+
+.band {
+  padding-block: clamp(3.75rem, 6vw, 6.5rem);
+}
+
+.band-tight {
+  padding-block: clamp(2.75rem, 4vw, 4.5rem);
+}
+
+.band-tall {
+  padding-block: clamp(4.5rem, 7.5vw, 8rem);
+}
+
+.rule {
+  border-top: 1px solid var(--color-line);
+}
+
+/* ---------- Restrained glass ---------- */
+/* Used only where content sits over motion or over a scrolled page. */
+
+.glass {
+  background: color-mix(in srgb, #ffffff 72%, transparent);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+}
+
+.glass-dark {
+  background: color-mix(in srgb, #07100f 55%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in srgb, #ffffff 12%, transparent);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass { background: rgba(255, 255, 255, 0.96); }
+  .glass-dark { background: rgba(7, 16, 15, 0.92); }
+}
+
+/* ---------- Optical accents ---------- */
+
+.lattice {
+  background-image:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-brand) 22%, transparent) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+/* Dissolves the studio loop's top and bottom edges into the page colour.
+   Mobile only — above `sm` the loop is full-bleed and has no visible edge. */
+.hero-media-mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 18%,
+    #000 74%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 74%, transparent 100%);
+}
+
+@media (min-width: 40rem) {
+  .hero-media-mask {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.lattice-dark {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.09) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+} /* end @layer components */
+
+/* ---------- Motion primitives ---------- */
+
+/* No blur: mid-animation it renders type as an unreadable smear, which is
+   exactly what a fast scroll catches. Shorter, too — 0.9s was long enough
+   that content read as missing rather than as arriving. */
+@keyframes resolve {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* A signal travelling along an SVG path (offset-path). */
+@keyframes travel {
+  0% { offset-distance: 0%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-signal {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.86); }
+}
+
+/* Reveal-on-scroll: elements start hidden, IntersectionObserver adds
+   [data-inview]. The .no-js fallback keeps everything visible. */
+[data-reveal] {
+  opacity: 0;
+}
+
+[data-reveal][data-inview] {
+  animation: resolve 0.5s var(--ease) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+[data-reveal="rise"][data-inview] {
+  animation-name: rise;
+}
+
+.no-js [data-reveal] {
+  opacity: 1;
+}
+
+/* ============================================================
+   3D SCROLL
+   Native scroll-driven animations: they run off the main thread,
+   need no JavaScript, and cannot jank the scroll.
+
+   Browsers without `animation-timeline` simply render the finished
+   state — the [data-reveal] observer still fades content in, so
+   nothing is lost.
+   ============================================================ */
+
+.scene {
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+}
+
+.scene-near {
+  perspective: 900px;
+}
+
+@keyframes depth-recede {
+  from {
+    transform: translateZ(0) rotateX(0deg) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateZ(-320px) rotateX(9deg) scale(0.94);
+    opacity: 0.55;
+  }
+}
+
+/* These animate transform ONLY — never opacity.
+   They used to start at `opacity: 0` and rely on a scroll-timeline range to
+   bring them back. In Chrome, where `animation-timeline: view()` is live, that
+   left ten of fourteen elements measurably invisible at rest: the Labs band,
+   the network figure, the product ecosystem, the care journey and all four
+   mission cards were sitting at opacity 0 waiting for a range that a normal
+   scroll often never resolved. Whole sections read as empty space.
+
+   Depth is a flourish; it must never be the thing standing between a reader
+   and the content. Transform-only keeps the effect and cannot hide anything.
+   The distances are shorter too — without a fade to cover it, a 420px push
+   reads as a glitch rather than as depth. */
+
+@keyframes depth-approach {
+  from { transform: translateZ(-160px) rotateX(-3deg); }
+  to { transform: translateZ(0) rotateX(0deg); }
+}
+
+@keyframes depth-tilt {
+  from { transform: rotateY(-5deg) rotateX(2deg) translateZ(-90px); }
+  to { transform: rotateY(0deg) rotateX(0deg) translateZ(0); }
+}
+
+@keyframes depth-lift {
+  from { transform: translateZ(-70px) translateY(22px); }
+  to { transform: translateZ(0) translateY(0); }
+}
+
+@supports (animation-timeline: view()) {
+  /* The hero pushes back into the scene as it leaves. */
+  .z-recede {
+    transform-style: preserve-3d;
+    animation: depth-recede linear both;
+    animation-timeline: view();
+    animation-range: exit -10% exit 90%;
+    will-change: transform, opacity;
+  }
+
+  /* Content arrives from behind the screen plane. */
+  .z-approach {
+    transform-style: preserve-3d;
+    animation: depth-approach linear both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 32%;
+    will-change: transform, opacity;
+  }
+
+  .z-tilt {
+    transform-style: preserve-3d;
+    animation: depth-tilt linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+    will-change: transform, opacity;
+  }
+
+  .z-lift {
+    transform-style: preserve-3d;
+    animation: depth-lift linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 30%;
+    will-change: transform, opacity;
+  }
+
+  /* Staggered depth across a row or grid. */
+  .z-stagger > * {
+    transform-style: preserve-3d;
+    animation: depth-lift linear both;
+    animation-timeline: view();
+  }
+  .z-stagger > *:nth-child(1) { animation-range: entry 6% cover 26%; }
+  .z-stagger > *:nth-child(2) { animation-range: entry 10% cover 30%; }
+  .z-stagger > *:nth-child(3) { animation-range: entry 14% cover 34%; }
+  .z-stagger > *:nth-child(4) { animation-range: entry 18% cover 38%; }
+  .z-stagger > *:nth-child(5) { animation-range: entry 22% cover 42%; }
+  .z-stagger > *:nth-child(6) { animation-range: entry 26% cover 46%; }
+
+  /* Elements driven by the scroll timeline don't need the JS reveal,
+     and running both would double-animate them. */
+  .z-approach[data-reveal],
+  .z-tilt[data-reveal],
+  .z-lift[data-reveal],
+  .z-stagger > *[data-reveal] {
+    opacity: revert-layer;
+    animation-name: depth-approach;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] { opacity: 1 !important; filter: none !important; transform: none !important; }
+  [data-motion-optional] { display: none !important; }
+
+  /* No depth, no perspective, nothing scroll-linked. */
+  .scene,
+  .scene-near { perspective: none !important; }
+
+  .z-recede,
+  .z-approach,
+  .z-tilt,
+  .z-lift,
+  .z-stagger > * {
+    animation: none !important;
+    animation-timeline: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    will-change: auto !important;
+  }
+}
+
+/* ---------- Prose (MDX articles) ---------- */
+
+.prose {
+  font-size: 1.1875rem;
+  line-height: 1.72;
+  color: var(--color-charcoal);
+}
+
+.prose > * + * { margin-top: 1.5em; }
+
+.prose h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-top: 2.4em;
+  margin-bottom: -0.4em;
+}
+
+.prose h3 {
+  font-size: 1.3125rem;
+  line-height: 1.3;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-top: 2em;
+  margin-bottom: -0.5em;
+}
+
+.prose p > strong { color: var(--color-ink); font-weight: 500; }
+
+.prose a {
+  color: var(--color-brand-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--color-brand) 45%, transparent);
+}
+
+.prose a:hover { text-decoration-color: var(--color-brand); }
+
+.prose ul,
+.prose ol { padding-left: 1.25rem; }
+
+.prose li + li { margin-top: 0.5em; }
+
+.prose ul li { list-style: none; position: relative; }
+
+.prose ul li::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-brand);
+}
+
+.prose ol { list-style: decimal; }
+
+.prose blockquote {
+  border-left: 2px solid var(--color-brand);
+  padding-left: 1.5rem;
+  margin-block: 2.5em;
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.prose blockquote p { margin: 0; }
+
+.prose figure { margin-block: 2.5em; }
+
+.prose figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--color-slate);
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+.prose img { width: 100%; height: auto; border-radius: 4px; }
+
+.prose hr { border: 0; border-top: 1px solid var(--color-line); margin-block: 3em; }
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-paper);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}

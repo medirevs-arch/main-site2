@@ -1,0 +1,73 @@
+---
+title: "The real cost of a paper record"
+dek: "A folder in a filing room is not a cheap way to keep someone's history. It is an expensive one. The cost just gets paid somewhere other than the budget."
+category: "Healthcare Systems"
+author: "The Medirevs Team"
+authorRole: "Medirevs"
+publishedAt: "2026-07-22"
+heroImage: "/media/rural-clinic-bp.jpg"
+heroAlt: "A health worker taking an elderly patient's blood pressure at a rural clinic."
+featured: true
+tags: ["records", "clinical workflow", "interoperability"]
+---
+
+Paper looks free. It has no licence fee, no server, no training budget, and no
+vendor to call when it breaks. That appearance is the reason it survives, and it
+is why the case for digital records so often gets made badly, as a pitch about
+being modern rather than an honest account of what paper costs.
+
+The cost is real. It is simply paid by people rather than by the finance office.
+
+## Where the cost actually falls
+
+It falls on the patient who repeats their history at every visit, because the
+folder is in a different building, or in a different clinic entirely, or in the
+same room but unfindable.
+
+It falls on the clinician who makes a decision with less information than exists,
+because retrieving that information would take longer than the consultation.
+
+It falls on the pharmacist reading handwriting, and on the laboratory
+transcribing a request by hand, and on the facility that cannot answer a simple
+question about its own operations without someone counting folders.
+
+None of that appears as a line item. All of it is expenditure.
+
+> A record you cannot find is not a record. It is a receipt for work someone
+> already paid for once.
+
+## Why "just digitise it" is the wrong instruction
+
+The failure mode of health IT is a system that assumes conditions it does not
+have. It assumes a stable connection. It assumes a desktop computer. It assumes
+that the facility has someone whose job is to maintain software. It assumes that
+every party in an episode of care uses the same system.
+
+When any of those assumptions breaks, and in most clinics several break at once,
+the digital system becomes a second system running next to paper, and now the
+staff keep both going. That is worse than where they started, and it is the
+reason so many deployments quietly revert.
+
+So the requirement is not digitisation. The requirement is a record that survives
+the conditions of the place it is used in:
+
+- It works when the connection does not, and reconciles when the connection
+  returns.
+- It runs on the device people already have.
+- It moves between the parties who touch one episode of care.
+- It is faster than the paper it replaces on the very first day, not after a
+  three-month adjustment period.
+
+That last one is the hard constraint. A system that is slower than a folder will
+lose to the folder, and it should.
+
+## What we are building toward
+
+Medirevs EHR is being developed against these constraints rather than around
+them. Offline-first is not a feature on a list; it is the assumption the system
+is built on. The same goes for interoperability. A record that cannot move
+between a clinic, a pharmacy and a lab has solved storage and left the real
+problem alone.
+
+We will write more about this as the work develops, including the parts that turn
+out to be harder than expected.

@@ -1,0 +1,58 @@
+---
+title: "Designing for the network you actually have"
+dek: "Most health software assumes the connection is always there. Across much of the continent, that is the one thing you cannot assume."
+category: "Digital Health"
+author: "The Medirevs Team"
+authorRole: "Medirevs"
+publishedAt: "2026-06-18"
+heroImage: "/media/elder-care-outreach.jpg"
+heroAlt: "A clinician taking a blood pressure reading at a community outreach session held outdoors."
+tags: ["offline-first", "mobile", "engineering"]
+---
+
+There is a version of digital health that works beautifully in a demo and fails
+in a corridor. The demo has full signal. The corridor has one bar, a shared
+handset, and a queue.
+
+Building for the second case changes the software, not just its settings.
+
+## Connectivity is a state, not a switch
+
+Treating the network as either on or off gives you software that behaves badly
+in the state most people are actually in, which is neither. The
+connection is present but slow. It drops mid-request. It returns while a form is
+half-filled.
+
+Designing for that means a few unglamorous commitments:
+
+- **Writes are local first.** The user's action completes on their device. Sync
+  is a background concern, not something they wait for.
+- **Conflict has a defined answer.** Two clinicians editing the same record on
+  two devices is a normal event, not an exception to handle later.
+- **State is visible.** People trust a system that tells them plainly what has
+  synced and what has not. They stop trusting one that pretends everything is
+  fine.
+
+## The phone is the computer
+
+Across much of the continent, the primary computing device in a clinical setting
+is a mid range Android phone, often someone's personal one. That is not a
+limitation to design around. It is the platform.
+
+It sets real budgets. Pages have to be small, because data costs money the user
+is paying personally. Interfaces have to work one-handed, because the other hand
+is doing something. Text has to stay legible on a screen in daylight.
+
+It also sets an honest test for anything we build: if it is unpleasant on a
+three-year-old handset on a weak connection, it is not finished.
+
+## What this rules out
+
+This approach rules some things out, and it is worth being direct about them.
+
+Heavy client-side applications that assume a fast download are out. Interfaces
+that fetch on every keystroke are out. Media-heavy screens that look impressive
+in a screenshot and cost a user real money to load are out.
+
+What remains is a narrower, more disciplined kind of software. We think that
+discipline is the product.
