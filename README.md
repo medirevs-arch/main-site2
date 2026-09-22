@@ -83,31 +83,25 @@ photography) and `MICROSCOPE_GALLERY` (the microscope project page).
 
 ---
 
-## Two versioned builds
+## Surfaces
 
-The site ships two complete visual builds. Switch with one value — no component
-edits, no branch:
+Page surfaces come from four custom properties (`--page`, `--page-alt`,
+`--surface`, `--pill`) declared on `:root` in `src/app/globals.css` and exposed
+to Tailwind through `@theme inline`, so `bg-page` resolves through them.
 
-```
-# .env.local
-NEXT_PUBLIC_SITE_VERSION=studio     # default
-NEXT_PUBLIC_SITE_VERSION=clinical
-```
+Medirevs Labs stays dark throughout — that is its identity, not a theme.
 
-Or change `DEFAULT_VERSION` in `src/lib/version.ts`. Then rebuild.
+## Where people join
 
-| | **studio** | **clinical** |
-|---|---|---|
-| Page | `#f0f0ee` light studio | white editorial |
-| Navigation | two floating pills, full wordmark, Products opens on hover | full bar with product dropdown |
-| Hero | full-bleed product loop, bottom-left block, small type | dark optical field, display type |
-| Homepage | 3D scroll depth throughout | editorial reveals |
+The waitlist is the primary call to action across the site. `WaitlistInline`
+asks for an email address and nothing else, then asks the optional questions
+(role, country, where they work) on the success panel, once the address is
+already captured.
 
-Medirevs Labs stays dark in both — that is its identity, not a theme.
-
-Surfaces come from four custom properties (`--page`, `--page-alt`, `--surface`,
-`--pill`) exposed to Tailwind through `@theme inline`, so `bg-page` follows the
-active build.
+It appears on `/waitlist`, in the navigation, on the home page closing block,
+on all three product pages, under every article, and in the footer. Every
+placement passes a `placement` prop so the sheet records which one converted.
+"Request a Demo" is the secondary ask throughout, aimed at clinics.
 
 ## Tone of voice
 

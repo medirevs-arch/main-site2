@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import WaitlistInline from "@/components/WaitlistInline";
 import ProductGlyph from "@/components/graphics/ProductGlyph";
-import { Button, SectionHeader, StatusChip } from "@/components/ui";
+import { SectionHeader, StatusChip } from "@/components/ui";
 import { PRODUCTS } from "@/lib/site";
 
 const product = PRODUCTS[2];
@@ -127,18 +129,33 @@ export default function DataAiPage() {
         </div>
       </section>
 
+      {/* This page had no signup of any kind — the only route off it was a
+          contact form and a demo request, both of which are meetings. Early
+          access is the whole status of this product line, so ask for it. */}
       <section className="bg-navy">
-        <div className="shell band text-center">
-          <h2 className="h2 mx-auto max-w-[22ch] text-balance text-white" data-reveal>
-            Working on something similar? We would like to talk.
-          </h2>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Button href="/contact" variant="light">
-              Contact Medirevs
-            </Button>
-            <Button href="/demo" variant="ghost">
-              Request a Demo
-            </Button>
+        <div className="shell band">
+          <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-24">
+            <div>
+              <p className="label mb-8 text-white/40">Early access</p>
+              <h2 className="h2 max-w-[18ch] text-white" data-reveal>
+                Go on the list for early access.
+              </h2>
+              <p className="mt-8 max-w-[44ch] leading-relaxed text-white/60">
+                These tools open to a small group first. Leave your email and we
+                will come to you when there is something real to try.
+              </p>
+            </div>
+
+            <div className="lg:pt-2">
+              <WaitlistInline dark placement="data-ai-page" />
+
+              <p className="label mt-10 text-white/35">
+                Working on something similar?{" "}
+                <Link href="/contact" className="underline underline-offset-4 hover:text-white/70">
+                  We would like to talk
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -25,6 +25,7 @@ const COLUMNS = [
       { label: "Our Mission", href: "/mission", external: false },
       { label: "Blog", href: "/blog", external: false },
       { label: "Contact", href: "/contact", external: false },
+      { label: "Join the waitlist", href: "/waitlist", external: false },
       { label: "Request a Demo", href: "/demo", external: false },
     ],
   },
@@ -154,12 +155,12 @@ export default function Footer() {
           </p>
           <ul className="flex gap-6">
             <li>
-              <Link href="/legal/privacy" className="label text-white/35 transition-colors hover:text-white/70">
+              <Link href="/legal/privacy" className="label text-white/55 transition-colors hover:text-white">
                 Privacy
               </Link>
             </li>
             <li>
-              <Link href="/legal/terms" className="label text-white/35 transition-colors hover:text-white/70">
+              <Link href="/legal/terms" className="label text-white/55 transition-colors hover:text-white">
                 Terms
               </Link>
             </li>

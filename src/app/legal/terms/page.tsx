@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/legal/terms" },
 };
 
+/** Bump this whenever the wording below changes. */
+const LEGAL_UPDATED = "9 September 2026";
+
 export default function TermsPage() {
   return (
     <>
@@ -16,8 +19,12 @@ export default function TermsPage() {
       <section className="rule">
         <div className="shell band">
           <div className="prose measure">
-            <p className="label" style={{ color: "var(--color-brand-dark)" }}>
+            <p className="label flex flex-wrap items-center gap-x-3 gap-y-1" style={{ color: "var(--color-brand-dark)" }}>
               Draft, pending legal review
+              <span className="text-mist" aria-hidden="true">
+                ·
+              </span>
+              <span className="text-slate">Last updated {LEGAL_UPDATED}</span>
             </p>
 
             <h2>About this site</h2>

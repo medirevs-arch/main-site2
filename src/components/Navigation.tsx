@@ -265,13 +265,24 @@ export default function Navigation() {
               </Link>
             ),
           )}
+          {/* Two asks, ordered by what they cost the visitor. The waitlist is
+              one email address and is what most people arriving here can
+              actually act on; a demo is a meeting, and suits clinics. The pill
+              used to be the demo, which meant the cheapest action on the site
+              was not offered anywhere in the chrome. */}
           <Link
             href="/demo"
-            className={`ml-3 rounded-sm px-5 py-2.5 text-[0.9375rem] font-medium transition-colors ${
+            className={`ml-2 px-4 py-2 text-[0.9375rem] transition-colors ${linkIdle}`}
+          >
+            Request a Demo
+          </Link>
+          <Link
+            href="/waitlist"
+            className={`ml-1 rounded-sm px-5 py-2.5 text-[0.9375rem] font-medium transition-colors ${
               onDark ? "bg-white text-ink hover:bg-white/90" : "bg-ink text-white hover:bg-brand"
             }`}
           >
-            Request a Demo
+            Join the waitlist
           </Link>
         </nav>
 
@@ -336,8 +347,15 @@ export default function Navigation() {
             </Link>
           ))}
           <Link
-            href="/demo"
+            href="/waitlist"
             className="mt-8 flex items-center justify-center gap-2 rounded-sm bg-ink px-6 py-4 text-base font-medium text-white"
+          >
+            Join the waitlist
+            <Arrow />
+          </Link>
+          <Link
+            href="/demo"
+            className="mt-3 flex items-center justify-center gap-2 rounded-sm border border-line px-6 py-4 text-base font-medium text-ink"
           >
             Request a Demo
             <Arrow />

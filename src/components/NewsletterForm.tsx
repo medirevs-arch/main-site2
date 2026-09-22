@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useState } from "react";
 import { Arrow } from "./ui";
 
@@ -80,6 +81,15 @@ export default function NewsletterForm() {
           {status !== "sending" && <Arrow />}
         </button>
       </div>
+      <p className="mt-3 text-xs leading-relaxed text-white/40">
+        One email now and then, and you can unsubscribe from any of them. We handle your
+        address as set out in our{" "}
+        <Link href="/legal/privacy" className="underline underline-offset-2 hover:text-white/70">
+          privacy notice
+        </Link>
+        .
+      </p>
+
       {status === "error" && (
         <p className="mt-3 text-sm text-white/70" role="alert">
           {message}

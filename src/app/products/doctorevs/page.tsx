@@ -6,8 +6,8 @@ import Reveal from "@/components/Reveal";
 import ScrollVideo from "@/components/ScrollVideo";
 import CareJourney from "@/components/graphics/CareJourney";
 import { Button, SectionHeader, StatusChip } from "@/components/ui";
-import { DOCTOREVS_GALLERY } from "@/lib/galleries";
-import { DOCTOREVS_URL, PRODUCTS } from "@/lib/site";
+import { DOCTOREVS_GALLERY, hasGalleryItems } from "@/lib/galleries";
+import { DIETI, DOCTOREVS_URL, PRODUCTS } from "@/lib/site";
 
 const product = PRODUCTS[0];
 
@@ -186,19 +186,76 @@ export default function DoctoRevsPage() {
         </div>
       </section>
 
-      {/* Gallery — editable via src/lib/galleries.ts */}
-      <section className="rule">
+      {/* Dieti. The only thing on this site anyone can use today, so it gets a
+          band rather than a footnote. Presented as a DoctoRevs capability that
+          happens to run on its own domain for now — see DIETI in site.ts. */}
+      <section id="dieti" className="rule scroll-mt-24 bg-wash">
         <div className="shell band">
-          <SectionHeader
-            index="04"
-            kicker="Inside the product"
-            title="Screens and photography."
-            lede="Screens and photos from the DoctoRevs beta."
-            className="mb-16"
-          />
-          <Gallery items={DOCTOREVS_GALLERY} placeholderLabel="DoctoRevs" columns={3} />
+          <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-20">
+            <div>
+              <p className="label mb-8 flex items-center gap-3" style={{ color: "var(--color-brand-dark)" }}>
+                <span
+                  className="inline-block h-1.5 w-1.5 rounded-full"
+                  style={{ background: "var(--color-signal)", animation: "pulse-signal 2.4s ease-in-out infinite" }}
+                  aria-hidden="true"
+                />
+                {DIETI.status}
+              </p>
+
+              <h2 className="h2 measure text-ink" data-reveal>
+                One part of it is already working.
+              </h2>
+
+              <p className="lede measure mt-6 text-charcoal" data-reveal>
+                {DIETI.summary}
+              </p>
+
+              <div className="mt-10">
+                <Button href={DIETI.url} variant="outline" external>
+                  Try {DIETI.name}
+                </Button>
+              </div>
+            </div>
+
+            <ul className="grid gap-px bg-line sm:grid-cols-2">
+              {[
+                { title: "Photograph the meal", body: "Vision-first. It works out the foods, the portions and how they were cooked." },
+                { title: "40+ nutrients back", body: "Macros, micronutrients, glycemic load and inflammatory profile, per scan." },
+                { title: "16 health scores", body: "Heart, kidney, gut and diabetes among them, with the reasoning shown." },
+                { title: "Trends over time", body: "Daily, weekly and monthly, so a clinician sees a pattern rather than a day." },
+              ].map((item, index) => (
+                <li
+                  key={item.title}
+                  className="bg-page p-7"
+                  data-reveal="rise"
+                  style={{ ["--delay" as string]: `${index * 70}ms` }}
+                >
+                  <h3 className="mb-2.5 text-base font-medium leading-snug tracking-[-0.015em] text-ink">
+                    {item.title}
+                  </h3>
+                  <p className="text-[0.9375rem] leading-relaxed text-charcoal">{item.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
+
+      {/* Gallery — editable via src/lib/galleries.ts */}
+      {hasGalleryItems(DOCTOREVS_GALLERY) && (
+        <section className="rule">
+          <div className="shell band">
+            <SectionHeader
+              index="04"
+              kicker="Inside the product"
+              title="Screens and photography."
+              lede="Screens and photos from the DoctoRevs beta."
+              className="mb-16"
+            />
+            <Gallery items={DOCTOREVS_GALLERY} placeholderLabel="DoctoRevs" columns={3} />
+          </div>
+        </section>
+      )}
 
       {/* Beta signup */}
       <section id="beta" className="scroll-mt-24 bg-lab">

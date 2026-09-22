@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Form from "@/components/Form";
+import OfflineDemo from "@/components/OfflineDemo";
 import PageHero from "@/components/PageHero";
+import WaitlistInline from "@/components/WaitlistInline";
 import Reveal from "@/components/Reveal";
 import { SectionHeader, StatusChip } from "@/components/ui";
 import { PRODUCTS } from "@/lib/site";
@@ -111,9 +112,28 @@ export default function EhrPage() {
         </div>
       </section>
 
+      {/* Try it rather than read it. The claim this product rests on is one a
+          visitor can verify in five seconds, so let them. */}
+      <section className="bg-lab">
+        <div className="shell band">
+          <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+            <SectionHeader
+              dark
+              index="02"
+              kicker="Try it"
+              title="Switch the network off."
+              lede="This is the behaviour, not a picture of it. Save a few notes, turn the connection off, keep working, then turn it back on and watch the queue clear in the order you wrote it."
+            />
+            <div className="lg:pt-2">
+              <OfflineDemo />
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="rule">
         <div className="shell band">
-          <SectionHeader index="02" kicker="What it does" title="Six things we are committed to." className="mb-16" />
+          <SectionHeader index="03" kicker="What it does" title="Six things we are committed to." className="mb-16" />
           <ul className="grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {product.capabilities.map((capability, index) => (
               <li
@@ -152,20 +172,13 @@ export default function EhrPage() {
               </p>
             </div>
 
-            <Form
-              dark
-              source="waitlist"
-              submitLabel="Join the waitlist"
-              successTitle="You're on the waitlist."
-              successBody="We will be in touch as we open up early access."
-              fields={[
-                { name: "name", label: "Full name", required: true, half: true, autoComplete: "name" },
-                { name: "email", label: "Work email", type: "email", required: true, half: true, autoComplete: "email" },
-                { name: "organisation", label: "Facility name", required: true, half: true },
-                { name: "role", label: "Your role", half: true },
-                { name: "message", label: "How do you keep records today?", type: "textarea" },
-              ]}
-            />
+            {/* This was five fields, opening with "How do you keep records
+                today?" as a textarea. That is an interview, and it was the
+                only waitlist on the site. One address now, the rest asked
+                afterwards where answering is a favour rather than a toll. */}
+            <div className="lg:pt-2">
+              <WaitlistInline dark placement="ehr-page" />
+            </div>
           </div>
         </div>
       </section>

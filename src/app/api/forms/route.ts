@@ -13,12 +13,48 @@ import { z } from "zod";
 
 const ENDPOINT = process.env.MEDIREVS_FORMS_ENDPOINT;
 
+/**
+ * Optional second sink, tried only when the sheet has already failed every
+ * attempt. Any URL that accepts a JSON POST works: a second Apps Script, a
+ * Zapier or Make hook, a Slack incoming webhook. Set it and a Google outage
+ * stops costing us signups.
+ */
+const BACKUP_ENDPOINT = process.env.MEDIREVS_FORMS_BACKUP_ENDPOINT;
+
+/**
+ * The sheet is a single point of failure, and since the waitlist became the
+ * site's primary call to action a dropped submission is a lost signup rather
+ * than a lost enquiry. Most failures are transient — an Apps Script cold
+ * start, a timeout, a brief Google blip — so retry before giving up.
+ *
+ * Two attempts, ~600ms apart. Deliberately short: the visitor is watching a
+ * spinner, and a signup form that hangs for ten seconds loses more people
+ * than the retry saves.
+ */
+const MAX_ATTEMPTS = 2;
+const RETRY_DELAY_MS = 600;
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function forward(url: string, payload: unknown) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(10_000),
+    redirect: "follow",
+  });
+
+  if (!response.ok) throw new Error(`Upstream responded ${response.status}`);
+}
+
 const schema = z.object({
   source: z.enum(["contact", "demo", "beta", "waitlist", "newsletter", "labs"]),
   email: z.string().trim().email("Enter a valid email address").max(180),
   name: z.string().trim().max(120).optional(),
   organisation: z.string().trim().max(160).optional(),
   role: z.string().trim().max(120).optional(),
+  country: z.string().trim().max(80).optional(),
   phone: z.string().trim().max(40).optional(),
   product: z.string().trim().max(80).optional(),
   message: z.string().trim().max(4000).optional(),
@@ -89,23 +125,43 @@ export async function POST(request: Request) {
     );
   }
 
-  try {
-    const response = await fetch(ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, timestamp: new Date().toISOString() }),
-      signal: AbortSignal.timeout(10_000),
-      redirect: "follow",
-    });
+  const submission = { ...data, timestamp: new Date().toISOString() };
+  let lastError: unknown;
 
-    if (!response.ok) throw new Error(`Upstream responded ${response.status}`);
-  } catch (error) {
-    console.error("Form forwarding failed:", error);
-    return NextResponse.json(
-      { ok: false, error: "We could not send that. Please try again, or email info@medirevs.com." },
-      { status: 502 },
-    );
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
+    try {
+      await forward(ENDPOINT, submission);
+      return NextResponse.json({ ok: true });
+    } catch (error) {
+      lastError = error;
+      if (attempt < MAX_ATTEMPTS) await sleep(RETRY_DELAY_MS);
+    }
   }
 
-  return NextResponse.json({ ok: true });
+  console.error(`Form forwarding failed after ${MAX_ATTEMPTS} attempts:`, lastError);
+
+  // The sheet is unreachable. Try the backup sink before telling anyone bad news.
+  if (BACKUP_ENDPOINT) {
+    try {
+      await forward(BACKUP_ENDPOINT, { ...submission, viaBackup: true });
+      console.warn("Form captured by backup endpoint after sheet failure.");
+      return NextResponse.json({ ok: true });
+    } catch (error) {
+      console.error("Backup endpoint also failed:", error);
+    }
+  }
+
+  // Last resort: emit the submission as one structured line so it survives in
+  // the platform logs and can be replayed by hand. This is recovery, not
+  // storage — it is not a substitute for a real durable sink, and it is why
+  // the visitor is still told the truth rather than shown a success screen.
+  console.error(
+    "FORM_SUBMISSION_UNSAVED",
+    JSON.stringify({ ...submission, recoveredFrom: "logs" }),
+  );
+
+  return NextResponse.json(
+    { ok: false, error: "We could not send that. Please try again, or email info@medirevs.com." },
+    { status: 502 },
+  );
 }

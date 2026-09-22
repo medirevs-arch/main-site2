@@ -60,3 +60,15 @@ export const MICROSCOPE_GALLERY: GalleryItem[] = [
 
 /** How many placeholder frames to draw while a gallery is still empty. */
 export const PLACEHOLDER_COUNT = 3;
+
+/**
+ * Whether a gallery section should render at all.
+ *
+ * In development an empty gallery still draws labelled frames, so the layout
+ * is visible while the photography is being gathered. In production it must
+ * disappear along with its heading — a titled band containing three dashed
+ * boxes looks like the page failed to load rather than like work in progress.
+ */
+export function hasGalleryItems(items: GalleryItem[]): boolean {
+  return items.length > 0 || process.env.NODE_ENV !== "production";
+}

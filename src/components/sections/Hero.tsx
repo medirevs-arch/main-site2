@@ -80,23 +80,27 @@ export default function Hero() {
           Medirevs, {CONTACT.address.city}, {CONTACT.address.country}
         </p>
 
+        {/* This was "Building better ways to deliver healthcare", which two
+            hundred companies could say. The handovers line is the one only
+            Medirevs would write, and it was buried in section 01 — so the
+            page spent its most specific sentence below the fold. */}
         <h1 className="display max-w-[16ch] text-balance text-white">
-          Building better ways to deliver healthcare.
+          Healthcare breaks at the handovers.
         </h1>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
           <p className="lede max-w-[50ch] text-white/85">
-            Clinical software, health data tools and medical technology, built
-            for the way care actually works here — mobile networks, connections
-            that drop, and clinics of every size.
+            We build the software that holds a visit together. Consultations,
+            records, prescriptions and lab results, on the phone you already
+            carry.
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <Button href="/products" variant="light">
-              Explore Medirevs
+            <Button href="/waitlist" variant="light">
+              Join the waitlist
             </Button>
-            <Button href="/demo" variant="ghost">
-              Request a Demo
+            <Button href="/products" variant="ghost">
+              Explore Medirevs
             </Button>
           </div>
         </div>

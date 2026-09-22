@@ -7,6 +7,7 @@ import rehypeSlug from "rehype-slug";
 import { ArticleCard } from "@/components/ArticleCard";
 import NewsletterForm from "@/components/NewsletterForm";
 import Reveal from "@/components/Reveal";
+import WaitlistInline from "@/components/WaitlistInline";
 import { Arrow } from "@/components/ui";
 import {
   categorySlug,
@@ -180,6 +181,26 @@ export default async function ArticlePage({ params }: Params) {
           </nav>
         )}
       </article>
+
+      {/* The waitlist sits here rather than at the foot of the page because
+          these articles are where LinkedIn sends people, and the moment
+          someone finishes reading one is the moment they are most willing to
+          act. The newsletter stays at the bottom: a different, smaller ask. */}
+      <aside className="shell mt-20">
+        <div className="border-t border-line pt-10">
+          <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-16">
+            <div>
+              <p className="label mb-4" style={{ color: "var(--color-brand)" }}>
+                Waitlist
+              </p>
+              <p className="text-lg leading-snug tracking-[-0.015em] text-ink">
+                We are opening access to what we are building, in stages.
+              </p>
+            </div>
+            <WaitlistInline compact placement={`blog-${post.slug}`} />
+          </div>
+        </div>
+      </aside>
 
       {/* Related */}
       {related.length > 0 && (

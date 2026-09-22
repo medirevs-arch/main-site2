@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import Hero from "@/components/sections/Hero";
@@ -7,9 +8,10 @@ import ProductEcosystem from "@/components/ProductEcosystem";
 import NetworkFigure from "@/components/graphics/NetworkFigure";
 import CareJourney from "@/components/graphics/CareJourney";
 import { ArticleCard } from "@/components/ArticleCard";
-import { Button, EditorialStatement, SectionHeader, TextLink } from "@/components/ui";
+import WaitlistInline from "@/components/WaitlistInline";
+import { SectionHeader, TextLink } from "@/components/ui";
 import { getAllPosts } from "@/lib/blog";
-import { DOCTOREVS_URL } from "@/lib/site";
+import { DIETI, DOCTOREVS_URL } from "@/lib/site";
 
 const CONSTRAINTS = [
   {
@@ -48,16 +50,61 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 01 — Purpose */}
-      <section className="scene bg-page band">
-        <div className="z-approach">
-          <EditorialStatement footnote="We started in Accra. We build for the health system we know, and we build so the work travels well.">
-            Healthcare breaks at the handovers. We build the connections.
-          </EditorialStatement>
+      {/* 01 — What we make.
+          Products used to sit third, behind an editorial statement and the
+          network diagram, so a first-time visitor met roughly 130 words of
+          argument before a single product was named. The argument lands
+          better once you know what is being argued about. */}
+      <section className="scene bg-page">
+        <div className="shell band">
+          <SectionHeader
+            index="01"
+            kicker="Products"
+            title="Three systems, built to work together."
+            className="mb-16 lg:mb-20"
+          />
+          <div className="z-tilt">
+            <ProductEcosystem />
+          </div>
         </div>
       </section>
 
-      {/* 02 — The connected system */}
+      {/* Dieti. Everything else on this page is beta, in development or early
+          access — this is the one thing a visitor can open and use right now,
+          so it gets a band of its own directly under the product index rather
+          than being left three quarters of the way down the DoctoRevs page.
+          A short band between two tall ones, so it reads as an aside with
+          something to offer rather than another section to scroll past. */}
+      <section className="rule bg-page">
+        <div className="shell band-tight">
+          <div className="flex flex-wrap items-center justify-between gap-x-12 gap-y-6">
+            <div>
+              <p className="label mb-4 flex items-center gap-3" style={{ color: "var(--color-brand-dark)" }}>
+                <span
+                  className="inline-block h-1.5 w-1.5 rounded-full"
+                  style={{
+                    background: "var(--color-signal)",
+                    animation: "pulse-signal 2.4s ease-in-out infinite",
+                  }}
+                  aria-hidden="true"
+                />
+                {DIETI.status}
+              </p>
+              <p className="max-w-[46ch] text-lg leading-snug tracking-[-0.015em] text-ink">
+                One part of it is already working. Photograph a meal, get the
+                nutrition back.
+              </p>
+            </div>
+
+            <TextLink href={DIETI.url} external className="text-brand-dark">
+              Try {DIETI.name}
+            </TextLink>
+          </div>
+        </div>
+      </section>
+
+      {/* 02 — The connected system. This now explains products the
+          reader has already met, instead of standing in front of them. */}
       <section className="scene rule bg-wash">
         <div className="shell band">
           <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
@@ -72,27 +119,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 03 — Product ecosystem */}
+      {/* 03 — DoctoRevs in motion */}
       <section className="scene rule bg-page">
-        <div className="shell band">
-          <SectionHeader
-            index="03"
-            kicker="Products"
-            title="Three systems, built to work together."
-            className="mb-16 lg:mb-20"
-          />
-          <div className="z-tilt">
-            <ProductEcosystem />
-          </div>
-        </div>
-      </section>
-
-      {/* 04 — DoctoRevs in motion */}
-      <section className="scene rule bg-wash">
         <div className="shell band">
           <div className="mb-16 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <SectionHeader
-              index="04"
+              index="03"
               kicker="DoctoRevs"
               title="Follow one visit from start to finish."
               lede="From the moment someone books to the moment a result lands back in their record. One path instead of six disconnected ones."
@@ -125,6 +157,46 @@ export default function HomePage() {
               launching at doctorevs.com
             </a>
           </p>
+        </div>
+      </section>
+
+      {/* 04 — Why we build this way.
+          Moved down from first position. It is a good statement, but as an
+          opener it asked the reader to care about our constraints before they
+          knew what we made. Here it is the pivot out of the products and into
+          Labs and the mission.
+
+          Paired with a photograph rather than left as centred type: sections
+          01 to 03 are diagrams and panels, so this was the one stretch of the
+          page carrying no image at all, and the statement is about a place. */}
+      <section className="scene rule bg-wash">
+        <div className="shell band">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+            <figure className="z-tilt relative aspect-[4/3] overflow-hidden rounded-sm">
+              <Image
+                src="/media/rural-clinic-bp.jpg"
+                alt="A nurse taking an elderly woman's blood pressure at an outreach clinic set up under a concrete shelter, with another patient waiting beside them."
+                fill
+                sizes="(min-width: 1024px) 52vw, 100vw"
+                className="object-cover object-[58%_center]"
+              />
+            </figure>
+
+            <div className="z-approach">
+              <p className="h1 max-w-[15ch] text-balance text-ink" data-reveal>
+                We started in Accra, and we build for what we can see from here.
+              </p>
+              <p
+                className="lede measure mt-8 text-charcoal"
+                data-reveal
+                style={{ ["--delay" as string]: "120ms" }}
+              >
+                Mobile networks that drop, phones instead of desktops, and clinics
+                that range from a single room to a teaching hospital. Those are the
+                requirements, not the edge cases.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -214,23 +286,40 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* 08 — Final CTA */}
+      {/* 08 — Final CTA.
+          The form itself, not a button pointing at a form. This is the last
+          thing on the page and the cheapest thing we can ask for, so asking
+          for it here rather than sending people one more click away is worth
+          the extra component. The demo stays available underneath, for the
+          clinics that want to see it working before they commit. */}
       <section className="scene relative overflow-hidden bg-navy">
-        <div className="shell band-tall relative text-center">
-          <div className="z-approach">
-            <h2 className="h1 mx-auto max-w-[20ch] text-balance text-white" data-reveal>
-              Better healthcare starts with better tools.
-            </h2>
-            <div className="mt-12 flex flex-wrap justify-center gap-3">
-              <Button href="/demo" variant="light">
-                Request a Demo
-              </Button>
-              <Button href="/contact" variant="ghost">
-                Contact Medirevs
-              </Button>
+        <div className="shell band-tall relative">
+          <div className="z-approach grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-24">
+            <div>
+              <p className="label mb-8 text-white/40">Waitlist</p>
+              <h2 className="h1 max-w-[16ch] text-balance text-white" data-reveal>
+                Be first to use it.
+              </h2>
+              <p className="lede mt-8 max-w-[42ch] text-white/60">
+                We are opening access in stages. Leave your email and you go in
+                the queue, whether you are a patient, a clinician or running a
+                clinic.
+              </p>
+            </div>
+
+            <div className="lg:pt-4">
+              <WaitlistInline dark placement="home-footer" />
+
+              <p className="label mt-10 text-white/35">
+                Run a clinic?{" "}
+                <Link href="/demo" className="underline underline-offset-4 hover:text-white/70">
+                  Request a demo instead
+                </Link>
+              </p>
             </div>
           </div>
-          <p className="label mt-12 text-white/35">
+
+          <p className="label mt-16 border-t border-white/10 pt-8 text-white/35">
             <Link href="/labs#collaborate" className="underline underline-offset-4 hover:text-white/70">
               Researchers and engineers, come and work with Medirevs Labs
             </Link>

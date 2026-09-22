@@ -121,6 +121,26 @@ export const NAV = [
 /** DoctoRevs is launching on its own domain. */
 export const DOCTOREVS_URL = "https://doctorevs.com";
 
+/**
+ * Dieti — nutrition analysis from a photograph of a meal. Live today on its own
+ * domain, and the only Medirevs product a visitor can use right now; everything
+ * else is beta, in development or early access.
+ *
+ * It is presented as a DoctoRevs capability rather than a fourth product. It
+ * will merge into DoctoRevs once that is ready, and until then a separate
+ * product entry would mean a fourth glyph, a fourth status, and rewriting
+ * "three systems, built to work together" in three places — all of which would
+ * have to be undone at the merge. When it merges, drop `url` and move the
+ * capability inline.
+ */
+export const DIETI = {
+  name: "Dieti",
+  url: "https://dieti.doctorevs.com",
+  status: "Live now",
+  summary:
+    "Photograph a meal and get the nutrition back. Built with DoctoRevs, running on its own for now, joining the platform when DoctoRevs is ready.",
+} as const;
+
 export const LABS = {
   name: "Medirevs Labs",
   positioning: "Engineering healthcare from first principles.",

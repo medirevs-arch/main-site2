@@ -67,10 +67,10 @@ export default function ProductEcosystem() {
       </ul>
 
       {/* Panel */}
-      <div className="relative min-h-[30rem] overflow-hidden rounded-sm border border-line bg-paper">
-        <div className="lattice absolute inset-0 opacity-[0.5]" aria-hidden="true" />
+      <div className="relative min-h-[30rem] overflow-hidden rounded-sm bg-brand-deep">
+        <div className="lattice-dark absolute inset-0 opacity-[0.6]" aria-hidden="true" />
         <div
-          className="absolute -right-16 -top-16 h-72 w-72 text-brand opacity-[0.13]"
+          className="absolute -right-16 -top-16 h-72 w-72 text-white opacity-[0.10]"
           aria-hidden="true"
         >
           <ProductGlyph product={glyph} className="h-full w-full" />
@@ -79,16 +79,16 @@ export default function ProductEcosystem() {
         {/* key= forces the fade to replay when the product changes */}
         <div key={product.slug} className="relative flex h-full flex-col p-8 sm:p-12">
           <div className="mb-8 flex items-center gap-4">
-            <StatusChip status={product.status} />
-            <span className="label text-mist">{product.kicker}</span>
+            <StatusChip status={product.status} dark />
+            <span className="label text-white/45">{product.kicker}</span>
           </div>
 
-          <h3 className="h2" style={{ animation: "resolve 0.5s var(--ease) both" }}>
+          <h3 className="h2 text-white" style={{ animation: "resolve 0.5s var(--ease) both" }}>
             {product.name}
           </h3>
 
           <p
-            className="lede measure mt-5"
+            className="lede measure mt-5 text-white/75"
             style={{ animation: "resolve 0.5s var(--ease) 60ms both" }}
           >
             {product.summary}
@@ -102,10 +102,10 @@ export default function ProductEcosystem() {
               <li key={capability.title} className="flex items-baseline gap-3">
                 <span
                   className="mt-1.5 h-1 w-1 shrink-0 rounded-full"
-                  style={{ background: "var(--color-brand)" }}
+                  style={{ background: "var(--color-signal)" }}
                   aria-hidden="true"
                 />
-                <span className="text-[0.9375rem] leading-snug text-charcoal">
+                <span className="text-[0.9375rem] leading-snug text-white/80">
                   {capability.title}
                 </span>
               </li>
@@ -115,7 +115,7 @@ export default function ProductEcosystem() {
           <div className="mt-auto pt-12">
             <Link
               href={product.href}
-              className="group/link inline-flex items-center gap-2.5 text-[0.9375rem] font-medium text-ink"
+              className="group/link inline-flex items-center gap-2.5 text-[0.9375rem] font-medium text-white"
             >
               <span className="relative">
                 Explore {product.name}

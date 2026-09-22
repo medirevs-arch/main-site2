@@ -6,7 +6,7 @@ import Reveal from "@/components/Reveal";
 import OpticalStackFigure from "@/components/graphics/OpticalStackFigure";
 import ProjectTimeline, { type Milestone } from "@/components/graphics/ProjectTimeline";
 import { Button, SectionHeader } from "@/components/ui";
-import { MICROSCOPE_GALLERY } from "@/lib/galleries";
+import { MICROSCOPE_GALLERY, hasGalleryItems } from "@/lib/galleries";
 import { LABS } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -146,19 +146,22 @@ export default function MicroscopePage() {
         </div>
       </section>
 
-      {/* Prototype gallery */}
-      <section className="rule">
-        <div className="shell band">
-          <SectionHeader
-            index="04"
-            kicker="Prototype"
-            title="Photography from the work."
-            lede="We will publish photos of the prototype and the process as the project moves. Where an image is a concept rather than finished hardware, we label it."
-            className="mb-16"
-          />
-          <Gallery items={MICROSCOPE_GALLERY} placeholderLabel="Prototype photography" columns={3} />
-        </div>
-      </section>
+      {/* Prototype gallery. Hidden entirely until there are photographs —
+          an empty band under a heading reads as a broken page. */}
+      {hasGalleryItems(MICROSCOPE_GALLERY) && (
+        <section className="rule">
+          <div className="shell band">
+            <SectionHeader
+              index="04"
+              kicker="Prototype"
+              title="Photography from the work."
+              lede="We will publish photos of the prototype and the process as the project moves. Where an image is a concept rather than finished hardware, we label it."
+              className="mb-16"
+            />
+            <Gallery items={MICROSCOPE_GALLERY} placeholderLabel="Prototype photography" columns={3} />
+          </div>
+        </section>
+      )}
 
       {/* Research questions */}
       <section className="rule bg-wash">

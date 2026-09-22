@@ -19,7 +19,14 @@ export default function Gallery({
 }) {
   const cols = columns === 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2";
 
+  // Placeholders are a development affordance: they hold the layout so it is
+  // obvious real photography is expected. On a launched site they read as a
+  // broken page, so in production an empty gallery renders nothing at all and
+  // the calling section collapses. Callers should use `hasGalleryItems` to
+  // drop their heading too, rather than leaving a titled empty band.
   if (items.length === 0) {
+    if (process.env.NODE_ENV === "production") return null;
+
     return (
       <div className={`grid gap-6 ${cols}`}>
         {Array.from({ length: PLACEHOLDER_COUNT }).map((_, index) => (

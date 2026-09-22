@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useState } from "react";
 import { Arrow } from "./ui";
 
@@ -191,7 +192,14 @@ export default function Form({
           {state.status !== "sending" && <Arrow />}
         </button>
         <p className={`text-xs leading-relaxed ${dark ? "text-white/40" : "text-slate"}`}>
-          We only use your details to reply to you.
+          We only use your details to reply to you, as set out in our{" "}
+          <Link
+            href="/legal/privacy"
+            className={`underline underline-offset-2 ${dark ? "hover:text-white/70" : "hover:text-ink"}`}
+          >
+            privacy notice
+          </Link>
+          .
         </p>
       </div>
     </form>
